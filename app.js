@@ -1,4 +1,4 @@
-const PAGE_SIZE = 60;
+const DEFAULT_PAGE_SIZE = 40;
 
 const refs = {
   serverAddress: document.getElementById("serverAddress"),
@@ -7,6 +7,7 @@ const refs = {
   typeFilter: document.getElementById("typeFilter"),
   dimensionFilter: document.getElementById("dimensionFilter"),
   sortOrder: document.getElementById("sortOrder"),
+  pageSize: document.getElementById("pageSize"),
   onlyWithText: document.getElementById("onlyWithText"),
   resultsMeta: document.getElementById("resultsMeta"),
   signList: document.getElementById("signList"),
@@ -37,6 +38,7 @@ async function init() {
       : "Server: Unknown";
 
     refs.summary.textContent = `${formatNumber(allSigns.length)} signs indexed`;
+    refs.pageSize.value = String(DEFAULT_PAGE_SIZE);
     populateFilters(allSigns);
     wireEvents();
     applyFiltersAndRender();
@@ -56,6 +58,7 @@ function wireEvents() {
   refs.typeFilter.addEventListener("change", reapply);
   refs.dimensionFilter.addEventListener("change", reapply);
   refs.sortOrder.addEventListener("change", reapply);
+  refs.pageSize.addEventListener("change", reapply);
   refs.onlyWithText.addEventListener("change", reapply);
 
   refs.prevPage.addEventListener("click", () => {
@@ -67,7 +70,7 @@ function wireEvents() {
   });
 
   refs.nextPage.addEventListener("click", () => {
-    const totalPages = getTotalPages();
+    const totalPages = getTotalPages(getPageSize());
     if (currentPage < totalPages) {
       currentPage += 1;
       render();
@@ -146,12 +149,13 @@ function render() {
   refs.signList.textContent = "";
 
   const total = filteredSigns.length;
-  const totalPages = getTotalPages();
+  const pageSize = getPageSize();
+  const totalPages = getTotalPages(pageSize);
   if (currentPage > totalPages) currentPage = totalPages;
   if (currentPage < 1) currentPage = 1;
 
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const end = Math.min(start + PAGE_SIZE, total);
+  const start = (currentPage - 1) * pageSize;
+  const end = Math.min(start + pageSize, total);
   const pageItems = filteredSigns.slice(start, end);
 
   for (const sign of pageItems) {
@@ -169,7 +173,8 @@ function render() {
   }
 
   const from = total === 0 ? 0 : start + 1;
-  refs.resultsMeta.textContent = `Showing ${formatNumber(from)}-${formatNumber(end)} of ${formatNumber(total)} signs`;
+  const pageSizeLabel = pageSize === Number.MAX_SAFE_INTEGER ? "all per page" : `${formatNumber(pageSize)} per page`;
+  refs.resultsMeta.textContent = `Showing ${formatNumber(from)}-${formatNumber(end)} of ${formatNumber(total)} signs (${pageSizeLabel})`;
   refs.pageInfo.textContent = `Page ${formatNumber(currentPage)} of ${formatNumber(totalPages)}`;
 
   refs.prevPage.disabled = currentPage <= 1;
@@ -187,8 +192,16 @@ function formatTimestamp(ms) {
   return date.toLocaleString();
 }
 
-function getTotalPages() {
-  return Math.max(1, Math.ceil(filteredSigns.length / PAGE_SIZE));
+function getPageSize() {
+  const value = refs.pageSize.value;
+  if (value === "all") return Number.MAX_SAFE_INTEGER;
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_PAGE_SIZE;
+}
+
+function getTotalPages(pageSize) {
+  if (pageSize === Number.MAX_SAFE_INTEGER) return 1;
+  return Math.max(1, Math.ceil(filteredSigns.length / pageSize));
 }
 
 function formatNumber(value) {

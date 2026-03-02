@@ -1,13 +1,13 @@
 :root {
-  --bg: #f3efe5;
-  --bg-accent: #e7dfd0;
-  --surface: #fffef8;
-  --ink: #1b1d1f;
-  --muted: #565d63;
-  --brand: #0f6e5c;
-  --brand-2: #db6a2c;
-  --line: #d2c8b8;
-  --shadow: 0 12px 30px rgba(27, 29, 31, 0.09);
+  --bg: #0b1017;
+  --bg-accent: #131c27;
+  --surface: #172231;
+  --ink: #edf3fb;
+  --muted: #9fb0c6;
+  --brand: #44d5b0;
+  --brand-2: #f2a64d;
+  --line: #2d3d53;
+  --shadow: 0 14px 36px rgba(4, 8, 14, 0.52);
 }
 
 * {
@@ -18,10 +18,11 @@ body {
   margin: 0;
   font-family: "Space Grotesk", sans-serif;
   color: var(--ink);
+  color-scheme: dark;
   background:
-    radial-gradient(circle at 5% 10%, rgba(219, 106, 44, 0.16), transparent 24%),
-    radial-gradient(circle at 90% 10%, rgba(15, 110, 92, 0.14), transparent 26%),
-    linear-gradient(180deg, var(--bg-accent) 0%, var(--bg) 45%, #efe6d7 100%);
+    radial-gradient(circle at 4% 8%, rgba(242, 166, 77, 0.2), transparent 24%),
+    radial-gradient(circle at 94% 7%, rgba(68, 213, 176, 0.18), transparent 26%),
+    linear-gradient(180deg, #131f2b 0%, var(--bg-accent) 40%, var(--bg) 100%);
   min-height: 100vh;
 }
 
@@ -34,7 +35,7 @@ body {
 .hero {
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: linear-gradient(140deg, #fdf9ef 0%, #f7f2e8 100%);
+  background: linear-gradient(140deg, #1a2736 0%, #152231 100%);
   padding: 1.25rem;
   box-shadow: var(--shadow);
 }
@@ -70,7 +71,7 @@ h1 {
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: rgba(255, 254, 248, 0.88);
+  background: rgba(24, 35, 50, 0.9);
   backdrop-filter: blur(2px);
 }
 
@@ -83,12 +84,12 @@ h1 {
 
 .controls input,
 .controls select {
-  border: 1px solid #c7bbab;
+  border: 1px solid #364b65;
   border-radius: 10px;
   padding: 0.56rem 0.62rem;
   font: inherit;
   color: var(--ink);
-  background: #fff;
+  background: #0f1824;
 }
 
 .controls input:focus,
@@ -127,7 +128,7 @@ h1 {
   border-radius: 14px;
   padding: 0.9rem;
   background: var(--surface);
-  box-shadow: 0 8px 20px rgba(27, 29, 31, 0.07);
+  box-shadow: 0 10px 24px rgba(3, 8, 15, 0.5);
   animation: rise 220ms ease-out;
 }
 
@@ -138,8 +139,8 @@ h1 {
   font-size: 0.94rem;
   padding: 0.64rem;
   border-radius: 8px;
-  background: #f6f3e7;
-  border: 1px dashed #d5cbb8;
+  background: #0f1824;
+  border: 1px dashed #34506d;
   font-family: "IBM Plex Mono", monospace;
 }
 
@@ -180,12 +181,13 @@ h1 {
   border-radius: 10px;
   padding: 0.46rem 0.8rem;
   font: inherit;
-  background: #fff;
+  color: var(--ink);
+  background: #172232;
   cursor: pointer;
 }
 
 .pager button:hover:not(:disabled) {
-  background: #f5efdf;
+  background: #1f3044;
 }
 
 .pager button:disabled {
