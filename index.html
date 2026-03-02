@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Minecraft Sign Index</p>
+      <h1>Sign Atlas</h1>
+      <p id="serverAddress" class="server"></p>
+      <div id="summary" class="summary">Loading signs...</div>
+    </header>
+
+    <section class="controls" aria-label="Filters">
+      <label>
+        Search text or coordinates
+        <input id="searchInput" type="search" placeholder="Try: pumpkins, 991, -1865">
+      </label>
+
+      <label>
+        Sign type
+        <select id="typeFilter">
+          <option value="">All types</option>
+        </select>
+      </label>
+
+      <label>
+        Dimension
+        <select id="dimensionFilter">
+          <option value="">All dimensions</option>
+        </select>
+      </label>
+
+      <label>
+        Sort by
+        <select id="sortOrder">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="text-az">Text A-Z</option>
+          <option value="text-za">Text Z-A</option>
+        </select>
+      </label>
+
+      <label class="checkbox">
+        <input id="onlyWithText" type="checkbox" checked>
+        Only signs with text
+      </label>
+    </section>
+
+    <section class="results">
+      <div id="resultsMeta" class="results-meta"></div>
+      <div id="signList" class="sign-grid" aria-live="polite"></div>
+      <nav class="pager" aria-label="Pagination">
+        <button id="prevPage" type="button">Previous</button>
+        <span id="pageInfo">Page 1 of 1</span>
+        <button id="nextPage" type="button">Next</button>
+      </nav>
+    </section>
+  </main>
+
+  <template id="signCardTemplate">
+    <article class="sign-card">
+      <pre class="sign-text"></pre>
+      <dl class="meta">
+        <div><dt>Type</dt><dd data-field="blockType"></dd></div>
+        <div><dt>Dimension</dt><dd data-field="dimension"></dd></div>
+        <div><dt>Coords</dt><dd data-field="coords"></dd></div>
+        <div><dt>Seen</dt><dd data-field="seen"></dd></div>
+      </dl>
+    </article>
+  </template>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
